@@ -15,6 +15,7 @@
 *	[Web - 層層地進 (100)](#層層地進)
 *	[Web - 單身一百年也沒用 (150)](#單身一百年也沒用)
 *	[Web - Download~! (200)](#Download~!)
+*	[Web - md5 collision (50)](#md5_collision)
 
 
 <h2 id="easy_wireshark">Misc - easy wireshark (50)</h2>
@@ -299,3 +300,40 @@ else {
 //flag:nctf{download_any_file_666}
 ?>
 ```
+
+<h2 id="md5_collision">Web - md5 collision (50)</h2>
+
+```php
+<?php
+$md51 = md5('QNKCDZO');
+$a = @$_GET['a'];
+$md52 = @md5($a);
+if(isset($a)){
+if ($a != 'QNKCDZO' && $md51 == $md52) {
+    echo "nctf{*****************}";
+} else {
+    echo "false!!!";
+}}
+else{echo "please input a";}
+?>
+```
+
+```
+md5('QNKCDZO') = 0e830400451993494058024219903391
+```
+
+覺得漏洞應該在 `==`
+
+但不知道怎麼繞過他
+
+看 writeup 後發現只要是 `0e` 開頭，判別都會過
+
+**但還沒有很清楚為什麼只要 `0e`就過**
+
+找一個做完 md5 後開頭是 0e 的值 `s1091221200a`
+
+```
+?a=s1091221200a
+```
+
+`nctf{md5_collision_is_easy}`
