@@ -156,7 +156,7 @@ for i in range(1, 50):
 
 Action -> Sent to Repeater 改成
 
-> GET /web8/search_key.php.php HTTP/1.1
+> GET /web8/search_key.php HTTP/1.1
 
 送回去
 
