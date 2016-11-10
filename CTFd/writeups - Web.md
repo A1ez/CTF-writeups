@@ -6,7 +6,6 @@
 	*	[這題不是 Web (100)](#這題不是Web)
 	*	[單身二十年 (100)](#單身二十年)
 	*	[你從哪裡來 (100)](#你從哪裡來)
-	*	[層層地進 (100)](#層層地進)
 	*	[單身一百年也沒用 (150)](#單身一百年也沒用)
 	*	[Download~! (200)](#Download~!)
 	*	[md5 collision (50)](#md5_collision)
@@ -14,6 +13,7 @@
 	*	[MYSQL (200)](#MYSQL)
 	*	[Header (250)](#Header)	
 * 看別人的 writeup 學
+	*	[層層地進 (100)](#層層地進)
 	*	[文件包含 (150)](#文件包含)	
 
 
@@ -138,44 +138,6 @@ Referer: google.com
 ```
 
 `flag:nctf{http_referer}`
-
-
-<h2 id="層層地進">層層地進 (100)</h2>
-
-偷看別人的 writeups 才知道要訪問 http://chinalover.sinaapp.com/web3/404.html
-
-原始碼中間有一段
-
-```php
-<!-- Placed at the end of the document so the pages load faster -->
-<!--  
-<script src="./js/jquery-n.7.2.min.js"></script>
-<script src="./js/jquery-c.7.2.min.js"></script>
-<script src="./js/jquery-t.7.2.min.js"></script>
-<script src="./js/jquery-f.7.2.min.js"></script>
-<script src="./js/jquery-{.7.2.min.js"></script>
-<script src="./js/jquery-t.7.2.min.js"></script>
-<script src="./js/jquery-h.7.2.min.js"></script>
-<script src="./js/jquery-i.7.2.min.js"></script>
-<script src="./js/jquery-s.7.2.min.js"></script>
-<script src="./js/jquery-_.7.2.min.js"></script>
-<script src="./js/jquery-i.7.2.min.js"></script>
-<script src="./js/jquery-s.7.2.min.js"></script>
-<script src="./js/jquery-_.7.2.min.js"></script>
-<script src="./js/jquery-a.7.2.min.js"></script>
-<script src="./js/jquery-_.7.2.min.js"></script>
-<script src="./js/jquery-f.7.2.min.js"></script>
-<script src="./js/jquery-l.7.2.min.js"></script>
-<script src="./js/jquery-4.7.2.min.js"></script>
-<script src="./js/jquery-g.7.2.min.js"></script>
-<script src="./js/jquery-}.7.2.min.js"></script>
--->
-```
-
-還是不知為何要訪問 `/404.html`
-
-`nctf{this_is_a_fl4g}`
-
 
 <h2 id="單身一百年也沒用">單身一百年也沒用 (150)</h2>
 
@@ -364,6 +326,42 @@ http://chinalover.sinaapp.com/web11/sql.php?id=1024.5
 藏在 Response Header 裡面
 
 `nctf{tips_often_hide_here}`
+
+<h2 id="層層地進">層層地進 (100)</h2>
+
+訪問 http://chinalover.sinaapp.com/web3/404.html
+
+原始碼中間有一段
+
+```php
+<!-- Placed at the end of the document so the pages load faster -->
+<!--  
+<script src="./js/jquery-n.7.2.min.js"></script>
+<script src="./js/jquery-c.7.2.min.js"></script>
+<script src="./js/jquery-t.7.2.min.js"></script>
+<script src="./js/jquery-f.7.2.min.js"></script>
+<script src="./js/jquery-{.7.2.min.js"></script>
+<script src="./js/jquery-t.7.2.min.js"></script>
+<script src="./js/jquery-h.7.2.min.js"></script>
+<script src="./js/jquery-i.7.2.min.js"></script>
+<script src="./js/jquery-s.7.2.min.js"></script>
+<script src="./js/jquery-_.7.2.min.js"></script>
+<script src="./js/jquery-i.7.2.min.js"></script>
+<script src="./js/jquery-s.7.2.min.js"></script>
+<script src="./js/jquery-_.7.2.min.js"></script>
+<script src="./js/jquery-a.7.2.min.js"></script>
+<script src="./js/jquery-_.7.2.min.js"></script>
+<script src="./js/jquery-f.7.2.min.js"></script>
+<script src="./js/jquery-l.7.2.min.js"></script>
+<script src="./js/jquery-4.7.2.min.js"></script>
+<script src="./js/jquery-g.7.2.min.js"></script>
+<script src="./js/jquery-}.7.2.min.js"></script>
+-->
+```
+
+還是不知為何要訪問 `/404.html`
+
+`nctf{this_is_a_fl4g}`
 
 <h2 id="文件包含">Web - 文件包含 (150)</h2>
 
